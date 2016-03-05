@@ -1,0 +1,78 @@
+require 'rubylang'
+
+RSpec.describe RubyLang do
+
+  subject(:ruby) { RubyLang.new }
+
+  it 'supports default parameters' do
+    expect(ruby.pow(2)).to eq 4
+    expect(ruby.pow(2, 3)).to eq 8
+  end
+
+  it 'supports keyword arguments' do
+    expect(ruby.add(a: 3, b: 2)).to eq 5
+  end
+
+  it 'supports varargs on arrays' do
+    expect(ruby.sum(1, 2, 3)).to eq 6
+  end
+
+  it 'supports splat operator on lists' do
+    numbers = [1, 2, 3]
+    expect(ruby.sum(*numbers)).to eq 6
+  end
+
+  it 'supports varargs on hashes' do
+    expect(ruby.flatten(a: 1, b: 2, c: 3)).to eq [:a, 1, :b, 2, :c, 3]
+  end
+
+  it 'supports splat operator on hashes' do
+    expect(ruby.flatten(**{a: 1, b: 2, c: 3})).to eq [:a, 1, :b, 2, :c, 3]
+  end
+
+  it 'supports lambdas' do
+    counter = ruby.counter
+
+    expect(counter.call).to eq 1
+    expect(counter.call).to eq 2
+    expect(counter.call).to eq 3
+  end
+
+  it 'support blocks' do
+    reduced = ruby.reduce_range(0, 3) { |sum, n| sum + n }
+    expect(reduced).to eq 6
+  end
+
+  it 'supports string interpolation' do
+    expect(ruby.greet 'Diego').to eq 'Hello Diego!'
+  end
+
+  it 'supports conditional assignment (similar to JS)' do
+    person ||= 'John'
+    expect(ruby.greet person).to eq 'Hello John!'
+
+    person ||= 'Diego'
+    expect(ruby.greet person).to eq 'Hello John!'
+  end
+
+  it 'supports boolean semantics for pretty much any type' do
+    zero = 0
+    nil_obj = nil
+    empty_str = ''
+    empty_list = []
+    empty_hash = {}
+
+    expect(!zero).to eq false
+    expect(!!nil_obj).to eq false
+    expect(!empty_str).to eq false
+    expect(!empty_list).to eq false
+    expect(!empty_hash).to eq false
+  end
+
+  it 'supports parallel assignment' do
+    a, b = 1, 2
+
+    expect(a).to eq 1
+    expect(b).to eq 2
+  end
+end
