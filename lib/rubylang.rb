@@ -20,7 +20,7 @@ class RubyLang
 
   def counter
     n = 0
-    return lambda { n += 1 }
+    return -> { n += 1 }
   end
 
   def reduce_range(from, to)
