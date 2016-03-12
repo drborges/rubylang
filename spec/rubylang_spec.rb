@@ -75,4 +75,38 @@ RSpec.describe RubyLang do
     expect(a).to eq 1
     expect(b).to eq 2
   end
+
+  it 'supports if blocks as expressions' do
+    age = 30
+    title = if age > 29
+              'Sr.'
+            else
+              'Mr.'
+            end
+
+    expect(title).to eq('Sr.')
+  end
+
+  it 'supports case blocks as expressions' do
+    age = 30
+    title = case age
+            when 0..17
+              'Kid'
+            when 18..29
+              'Mr.'
+            else
+              'Sr.'
+            end
+
+    expect(title).to eq('Sr.')
+  end
+
+  it 'Supports default assignment operator' do
+    title ||= 'Sr.'
+    age = 30
+    age ||= 15
+
+    expect(title).to eq('Sr.')
+    expect(age).to eq(30)
+  end
 end
