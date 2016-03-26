@@ -1,4 +1,9 @@
 class RubyLang
+  attr_reader :http
+
+  def initialize(http_client)
+    @http = http_client
+  end
 
   def pow(n, exp=2)
     n**exp
@@ -33,4 +38,7 @@ class RubyLang
     return "Hello #{person}!"
   end
 
+  def fetch(url)
+    @http.get url
+  end
 end

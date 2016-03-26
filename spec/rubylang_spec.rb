@@ -2,7 +2,7 @@ require 'rubylang'
 
 RSpec.describe RubyLang do
 
-  subject(:ruby) { RubyLang.new }
+  subject(:ruby) { RubyLang.new(double('http', get: 'response')) }
 
   it 'supports default parameters' do
     expect(ruby.pow(2)).to eq 4
@@ -108,5 +108,13 @@ RSpec.describe RubyLang do
 
     expect(title).to eq('Sr.')
     expect(age).to eq(30)
+  end
+
+  it 'mocks http client' do
+    expect(ruby.http).to receive(:get).with('www.google.com')
+
+    response = ruby.fetch 'www.google.com'
+
+    expect(response).to eq('response')
   end
 end
